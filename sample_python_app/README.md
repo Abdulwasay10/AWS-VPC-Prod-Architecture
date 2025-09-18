@@ -1,14 +1,25 @@
 
-#Update the packages
-sudo apt update
+### Update the packages
 
-#Install python3
-sudo apt install python3-pip -y
+   ```bash
+   sudo apt update
+   ```
 
-#Install Flask
-pip3 install flask
+### Install python3
 
+   ```bash
+   sudo apt install python3-pip -y
+   ```
 
+### Install Flask
 
-#To run the project
-python3 server.py
+   ```bash
+   pip3 install flask
+   ```
+
+### To run the project
+
+   ```bash
+   python3 server.py
+   ```
+
