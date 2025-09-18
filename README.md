@@ -157,7 +157,8 @@ This project demonstrates how to set up a production-style VPC with both public 
 ⚠️ Don’t forget: allow Port 80 in the ALB security group else it will be not reachable
 
 <img width="985" height="248" alt="Screenshot from 2025-09-17 18-29-12" src="https://github.com/user-attachments/assets/945c7217-814b-4392-8ceb-0cab2ff30d1e" />
-Step 5: Access the Application
+
+## Step 5: Access the Application
 
 5. Copy the DNS name/URL from the Load Balancer.
 
@@ -176,5 +177,6 @@ To test load balancing:
 Change the app text (e.g., "MY FIRST AWS" → "MY SECOND AWS") on different servers.
 
 Refresh or put load on the site → watch the load balancer distribute traffic.
+
 
 
