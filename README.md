@@ -4,17 +4,17 @@ This project demonstrates how to set up a production-style VPC with both public 
 
 ## Architecture Overview
 
-We’ll build this architecture step by step:
+1. We’ll build this architecture step by step:
 
-Create a VPC with public & private subnets.
+2. Create a VPC with public & private subnets.
 
-Launch instances in Auto Scaling Groups (private subnets).
+3. Launch instances in Auto Scaling Groups (private subnets).
 
-Configure a Bastion/Jump Host for secure access.
+4. Configure a Bastion/Jump Host for secure access.
 
-Set up an Application Load Balancer (ALB).
+5. Set up an Application Load Balancer (ALB).
 
-Access the deployed application via the ALB.
+6. Access the deployed application via the ALB.
 
 ## Step 1: Create VPC
 
@@ -28,15 +28,15 @@ Access the deployed application via the ALB.
 
 4. Keep default settings:
 
-  - Availability Zones: 2
+     - Availability Zones: 2
 
-  - Public Subnets: 2
+     - Public Subnets: 2
 
-  - Private Subnets: 2
+     - Private Subnets: 2
 
-  - NAT Gateways: 1 per AZ
+     - NAT Gateways: 1 per AZ
 
-  - VPC Endpoints: None (for now)
+     - VPC Endpoints: None (for now)
 
 5. Click Create VPC and watch AWS set everything up.
 
@@ -46,35 +46,35 @@ Access the deployed application via the ALB.
 
 2. Configure the template:
 
-  - Name & description
+     - Name & description
 
-  - AMI: Ubuntu (example)
+     - AMI: Ubuntu (example)
 
-  - Instance type: t2.micro (Free Tier eligible)
+     - Instance type: t2.micro (Free Tier eligible)
 
-  - Key pair (to SSH into server)
+     - Key pair (to SSH into server)
 
-  - Security Group: allow Port 22 (SSH), Port 8000 (app)
+     - Security Group: allow Port 22 (SSH), Port 8000 (app)
 
-  - [Important] Select the same VPC created earlier
+     - [Important] Select the same VPC created earlier
 
-  - Create the Launch Template.
+     - Create the Launch Template.
 
 3. Now create an Auto Scaling Group using that template:
 
-  - Select the VPC
+     - Select the VPC
 
-  - Choose Availability Zones → private subnets
+     - Choose Availability Zones → private subnets
 
-  - No Load Balancer (for now)
+     - No Load Balancer (for now)
 
-  - Desired/Min/Max capacity → set according to expected load
+     - Desired/Min/Max capacity → set according to expected load
 
-  - Skip scaling policies (default)
+     - Skip scaling policies (default)
 
-  - Wait until the Auto Scaling Group launches instances.
+     - Wait until the Auto Scaling Group launches instances.
     
-  - Verify EC2 instances → they should be in private subnets.
+     - Verify EC2 instances → they should be in private subnets.
 
 <img width="677" height="466" alt="Screenshot from 2025-09-17 16-54-37" src="https://github.com/user-attachments/assets/ea7fe4c5-fed1-400b-b94d-729e2a80fa1b" />
 
@@ -88,17 +88,17 @@ Access the deployed application via the ALB.
 
 2. Configure:
 
-  - Ubuntu image, t2.micro
+     - Ubuntu image, t2.micro
 
-  - Provide key pair
+     - Provide key pair
 
-  - Security group: allow SSH (Port 22)
+     - Security group: allow SSH (Port 22)
 
-  - VPC: same VPC as application instances
+     - VPC: same VPC as application instances
 
-  - Enable Auto-assign Public IP
+     - Enable Auto-assign Public IP
 
-  - Launch the instance.
+     - Launch the instance.
 
 3. SSH into the Bastion Host.
 
@@ -124,35 +124,35 @@ Access the deployed application via the ALB.
 
 3. Configure:
 
-  - Name: choose something meaningful
+     - Name: choose something meaningful
 
-  - Scheme: Internet-facing
+     - Scheme: Internet-facing
 
-  - IP type: IPv4
+     - IP type: IPv4
 
-  - VPC: your project’s VPC
+     - VPC: your project’s VPC
 
-  - Availability Zones: select both public subnets
+     - Availability Zones: select both public subnets
 
-  - Security Group: allow Port 8000
+     - Security Group: allow Port 8000
 
-  - Configure Listeners & Target Groups:
+     - Configure Listeners & Target Groups:
 
-  - Listener: HTTP, Port 8000
+     - Listener: HTTP, Port 8000
 
 4. Create a Target Group:
 
-  - Type: Instances
+     - Type: Instances
 
-  - Protocol: HTTP, Port 8000
+     - Protocol: HTTP, Port 8000
 
-  - Select VPC & register private EC2 instances
+     - Select VPC & register private EC2 instances
 
-  - Go back to the ALB config:
+     - Go back to the ALB config:
 
-  - Add another Listener: HTTP, Port 80 (to expose the ALB publicly)
+     - Add another Listener: HTTP, Port 80 (to expose the ALB publicly)
 
-  - Forward traffic to the Target Group created above
+     - Forward traffic to the Target Group created above
 
 ⚠️ Don’t forget: allow Port 80 in the ALB security group else it will be not reachable
 
@@ -176,4 +176,5 @@ To test load balancing:
 Change the app text (e.g., "MY FIRST AWS" → "MY SECOND AWS") on different servers.
 
 Refresh or put load on the site → watch the load balancer distribute traffic.
+
 
