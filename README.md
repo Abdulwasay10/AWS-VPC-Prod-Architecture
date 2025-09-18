@@ -24,7 +24,6 @@ Select VPC and more option – AWS will suggest subnets, route tables, internet 
 
 <img width="1234" height="370" alt="Screenshot from 2025-09-17 16-00-26" src="https://github.com/user-attachments/assets/cfb3d94c-191a-4488-962b-4b06a7c6edad" />
 
-
 Name the VPC and set the IP range (I used 10.0.0.16/16, ~65,536 IPs).
 
 Keep default settings:
@@ -74,17 +73,13 @@ Desired/Min/Max capacity → set according to expected load
 Skip scaling policies (default)
 
 Wait until the Auto Scaling Group launches instances.
-
 Verify EC2 instances → they should be in private subnets.
 
 <img width="677" height="466" alt="Screenshot from 2025-09-17 16-54-37" src="https://github.com/user-attachments/assets/ea7fe4c5-fed1-400b-b94d-729e2a80fa1b" />
 
-
 ⚠️ Note: These instances won’t have public IPs, so you cannot SSH directly. That’s where the Bastion Host comes in.
 
 <img width="557" height="136" alt="Screenshot from 2025-09-17 17-35-07" src="https://github.com/user-attachments/assets/0230fc79-98eb-4391-abfa-1b36cf122c64" />
-
-
 Step 3: Bastion/Jump Host
 
 Go to EC2 → Launch Instance.
@@ -115,7 +110,6 @@ scp /path/to/local/key.pem user@<bastion-public-ip>:/home/ubuntu/
 From the Bastion Host, SSH into private instances using their private IPs.
 
 <img width="512" height="124" alt="Screenshot from 2025-09-17 17-43-04" src="https://github.com/user-attachments/assets/1fc8da36-7a2e-43c6-89ee-567208c3cefd" />
-
 
 ✅ Once inside, you can host a simple web application on Port 8000.
 
@@ -157,22 +151,18 @@ Add another Listener: HTTP, Port 80 (to expose the ALB publicly)
 
 Forward traffic to the Target Group created above
 
-Don’t forget: allow Port 80 in the ALB security group else it will be not reachable
+⚠️ Don’t forget: allow Port 80 in the ALB security group else it will be not reachable
 
 <img width="985" height="248" alt="Screenshot from 2025-09-17 18-29-12" src="https://github.com/user-attachments/assets/945c7217-814b-4392-8ceb-0cab2ff30d1e" />
-
-
 Step 5: Access the Application
 
 Copy the DNS name/URL from the Load Balancer.
 
 <img width="631" height="164" alt="Screenshot from 2025-09-17 18-30-37" src="https://github.com/user-attachments/assets/faec3b66-7a0c-4297-9f74-164f299d4847" />
 
-
 Open it in the browser → you should see your app running on Port 8000, exposed via Port 80 on the ALB.
 
 <img width="612" height="113" alt="Screenshot from 2025-09-17 18-31-17" src="https://github.com/user-attachments/assets/af15a341-f778-478d-8c7b-e814f94c2600" />
-
 
 🎉 Congratulations! You just deployed a production-style VPC project with private subnets, bastion host, and an application load balancer.
 
