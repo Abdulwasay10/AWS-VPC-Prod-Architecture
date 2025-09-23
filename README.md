@@ -160,7 +160,7 @@ Don’t forget: allow Port 80 in the ALB security group else it will be not reac
 
 ## Step 5: Access the Application
 
-5. Copy the DNS name/URL from the Load Balancer.
+5. Copy the DNS name/URL from the Load Balancer
 
 <img width="631" height="164" alt="Screenshot from 2025-09-17 18-30-37" src="https://github.com/user-attachments/assets/faec3b66-7a0c-4297-9f74-164f299d4847" />
 
@@ -177,6 +177,7 @@ To test load balancing:
 Change the app text (e.g., "MY FIRST AWS" → "MY SECOND AWS") on different servers.
 
 Refresh or put load on the site → watch the load balancer distribute traffic.
+
 
 
 
